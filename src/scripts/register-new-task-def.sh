@@ -52,6 +52,8 @@ if [ -n "${CCI_ORB_AWS_ECS_PROXY_CONFIGURATION}" ] && [ "${CCI_ORB_AWS_ECS_PROXY
 fi
 
 REVISION=$(aws ecs register-task-definition \
+    --profile "$PROFILE_NAME" \
+    --region "$AWS_REGION" \
     --family "$ECS_PARAM_FAMILY" \
     --container-definitions "${CCI_ORB_AWS_ECS_CONTAINER_DEFS}" \
     "$@" \

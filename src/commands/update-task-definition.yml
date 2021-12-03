@@ -32,6 +32,9 @@ parameters:
       Values should not contain commas.
     type: string
     default: ''
+  profile-name:
+    type: string
+    default: default
 steps:
   - run:
       name: Retrieve previous task definition and prepare new task definition values
@@ -42,6 +45,7 @@ steps:
         ECS_PARAM_CONTAINER_ENV_VAR_UPDATES: <<parameters.container-env-var-updates>>
         ECS_SCRIPT_UPDATE_CONTAINER_DEFS: <<include(scripts/update_container_defs.py)>>
         ECS_SCRIPT_GET_TASK_DFN_VAL: <<include(scripts/get_task_dfn_val.py)>>
+        PROFILE_NAME: <<parameters.profile-name>>
 
 
   - run:
@@ -49,3 +53,4 @@ steps:
       command: <<include(scripts/register-new-task-def.sh)>>
       environment:
         ECS_PARAM_FAMILY: <<parameters.family>>
+        PROFILE_NAME: <<parameters.profile-name>>
